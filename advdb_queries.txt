@@ -20,6 +20,20 @@ WHERE BusinessEntityID=
 (SELECT BusinessEntityID 
 FROM Sales.Store
 WHERE Name='Bike World');
+//2
+SELECT Name, City 
+FROM Sales.Store 
+JOIN Sales.Customer 
+ON Sales.Customer.CustomerID=Sales.Store.BusinessEntityID 
+JOIN Person.BusinessEntity 
+ON Person.BusinessEntity.BusinessEntityID=Sales.Store.BusinessEntityID 
+
+JOIN Person.BusinessEntityAddress 
+ON Person.BusinessEntityAddress.BusinessEntityID=Person.BusinessEntity.BusinessEntityID 
+JOIN 
+Person.Address on Person.BusinessEntityAddress.AddressID=person.Address.AddressID 
+WHERE City='Dallas';
+
 //3
 SELECT COUNT(*)
   FROM [AdventureWorks2017].[Purchasing].[PurchaseOrderHeader]
