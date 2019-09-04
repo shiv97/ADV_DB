@@ -1,0 +1,70 @@
+//queries
+//1
+SELECT Name, EmailAddress, FirstName 
+FROM Sales.Store 
+JOIN Sales.Customer 
+ON Sales.Store.BusinessEntityID=Sales.Customer.StoreID 
+
+JOIN Person.Person 
+ON Sales.Customer.PersonID=Person.Person.BusinessEntityID
+
+JOIN Person.EmailAddress 
+ON Person.BusinessEntityID=EmailAddress.BusinessEntityID 
+
+WHERE NAME='Bike World';
+
+
+SELECT FirstName, EmailPromotion, BusinessEntityID
+FROM Person.Person
+WHERE BusinessEntityID= 
+(SELECT BusinessEntityID 
+FROM Sales.Store
+WHERE Name='Bike World');
+//3
+SELECT COUNT(*)
+  FROM [AdventureWorks2017].[Purchasing].[PurchaseOrderHeader]
+  Where SubTotal>1000
+//4
+SELECT Name
+  FROM [AdventureWorks2017].[Sales].[Store]
+  INNER JOIN [AdventureWorks2017].[Sales].[SalesOrderHeader]
+  ON Store.SalesPersonID=SalesOrderHeader.SalesPersonID
+  WHERE SalesOrderHeader.TotalDue>10000;
+//8
+SELECT *
+  FROM [AdventureWorks2017].[Production].[ProductModelProductDescriptionCulture]
+  WHERE CultureID='fr' 
+  AND ProductModelID=736
+//9
+SELECT Store.Name, SalesOrderHeader.SalesOrderNumber      
+  FROM [AdventureWorks2017].[Sales].[Store]
+  INNER JOIN [AdventureWorks2017].[Sales].[SalesOrderHeader]
+  ON Store.SalesPersonID=SalesOrderHeader.SalesPersonID
+  ORDER BY SalesOrderID DESC;
+
+//
+SELECT Name
+FROM Sales.Store
+WHERE rowguid= 
+(SELECT *
+FROM Person.Address
+WHERE City='Dallas');
+
+SELECT orders.order_id, suppliers.name   
+FROM suppliers  
+INNER JOIN orders  
+ON suppliers.supplier_id = orders.supplier_id  
+ORDER BY order_id; 
+//
+ $result = mysql_query("SELECT * FROM `table1` 
+                        INNER JOIN `table2` 
+                        INNER JOIN table3 
+                        ON table1.primaryKey=table2.table1Id=table3.table1Id");
+//
+/****** Script for SelectTopNRows command from SSMS  ******/
+
+
+ (SELECT ProductModelID
+  FROM [AdventureWorks2017].[Production].[ProductModel]
+  WHERE NAME='Racing Socks');
+//
