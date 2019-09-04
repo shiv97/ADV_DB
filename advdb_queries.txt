@@ -44,19 +44,83 @@ SELECT Name
   INNER JOIN [AdventureWorks2017].[Sales].[SalesOrderHeader]
   ON Store.SalesPersonID=SalesOrderHeader.SalesPersonID
   WHERE SalesOrderHeader.TotalDue>10000;
+
+//12
+SELECT SubTotal, SubTotal*(SalesOrderDetail.OrderQty) as SubtOq , (SalesOrderDetail.OrderQty)+(SalesOrderDetail.UnitPrice) as sumolp
+  FROM [AdventureWorks2017].[Sales].[SalesOrderHeader],[AdventureWorks2017].[Sales].[SalesOrderDetail] ;
+
 //8
 SELECT *
   FROM [AdventureWorks2017].[Production].[ProductModelProductDescriptionCulture]
   WHERE CultureID='fr' 
   AND ProductModelID=736
 //9
+SELECT Store.Name, SalesOrderHeader.SubTotal, SalesOrderHeader.SalesOrderID
+  FROM [AdventureWorks2017].[Sales].[SalesOrderHeader],[AdventureWorks2017].[Sales].[Store]
+   ORDER BY SalesOrderHeader.SubTotal DESC;
+ 
 SELECT Store.Name, SalesOrderHeader.SalesOrderNumber      
   FROM [AdventureWorks2017].[Sales].[Store]
   INNER JOIN [AdventureWorks2017].[Sales].[SalesOrderHeader]
   ON Store.SalesPersonID=SalesOrderHeader.SalesPersonID
   ORDER BY SalesOrderID DESC;
 
-//
+//13
+/****** Script for SelectTopNRows command from SSMS 
+SELECT TOP (1000) [SalesOrderID]
+      ,[RevisionNumber]
+      ,[OrderDate]
+      ,[DueDate]
+      ,[ShipDate]
+      ,[Status]
+      ,[OnlineOrderFlag]
+      ,[SalesOrderNumber]
+      ,[PurchaseOrderNumber]
+      ,[AccountNumber]
+      ,[CustomerID]
+      ,[SalesPersonID]
+      ,[TerritoryID]
+      ,[BillToAddressID]
+      ,[ShipToAddressID]
+      ,[ShipMethodID]
+      ,[CreditCardID]
+      ,[CreditCardApprovalCode]
+      ,[CurrencyRateID]
+      ,[SubTotal]
+      ,[TaxAmt]
+      ,[Freight]
+      ,[TotalDue]
+      ,[Comment]
+      ,[rowguid]
+      ,[ModifiedDate]
+  FROM [AdventureWorks2017].[Sales].[SalesOrderHeader]  ******/
+  SELECT *
+  FROM [AdventureWorks2017].[Sales].[SalesOrderHeader]
+  WHERE SubTotal BETWEEN 0 AND 99;
+  SELECT *
+  FROM [AdventureWorks2017].[Sales].[SalesOrderHeader]
+  WHERE SubTotal BETWEEN 100 AND 999;
+  SELECT *
+  FROM [AdventureWorks2017].[Sales].[SalesOrderHeader]
+  WHERE SubTotal BETWEEN 1000 AND 10000;
+   SELECT *
+  FROM [AdventureWorks2017].[Sales].[SalesOrderHeader]
+  WHERE SubTotal>10000;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//rough--ref. 
 SELECT Name
 FROM Sales.Store
 WHERE rowguid= 
