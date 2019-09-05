@@ -94,16 +94,16 @@ SELECT TOP (1000) [SalesOrderID]
       ,[rowguid]
       ,[ModifiedDate]
   FROM [AdventureWorks2017].[Sales].[SalesOrderHeader]  ******/
-  SELECT *
+  SELECT COUNT(DISTINCT SubTotal)
   FROM [AdventureWorks2017].[Sales].[SalesOrderHeader]
   WHERE SubTotal BETWEEN 0 AND 99;
-  SELECT *
+  SELECT COUNT(DISTINCT SubTotal)
   FROM [AdventureWorks2017].[Sales].[SalesOrderHeader]
   WHERE SubTotal BETWEEN 100 AND 999;
-  SELECT *
+  SELECT COUNT(DISTINCT SubTotal)
   FROM [AdventureWorks2017].[Sales].[SalesOrderHeader]
   WHERE SubTotal BETWEEN 1000 AND 10000;
-   SELECT *
+   SELECT COUNT(DISTINCT SubTotal)
   FROM [AdventureWorks2017].[Sales].[SalesOrderHeader]
   WHERE SubTotal>10000;
 
