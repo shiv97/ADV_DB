@@ -44,6 +44,10 @@ SELECT Name
   INNER JOIN [AdventureWorks2017].[Sales].[SalesOrderHeader]
   ON Store.SalesPersonID=SalesOrderHeader.SalesPersonID
   WHERE SalesOrderHeader.TotalDue>10000;
+//6
+SELECT SalesOrderID, UnitPrice, OrderQty
+  FROM [AdventureWorks2017].[Sales].[SalesOrderDetail]
+  WHERE OrderQty=1;
 
 //12
 SELECT SubTotal, SubTotal*(SalesOrderDetail.OrderQty) as SubtOq , (SalesOrderDetail.OrderQty)+(SalesOrderDetail.UnitPrice) as sumolp
