@@ -182,12 +182,12 @@ SELECT TOP (1000) [SalesOrderID]
   FROM [AdventureWorks2017].[Sales].[SalesOrderHeader]
   WHERE SubTotal>10000;
 
-
-
-
-
-
-
+//14
+Select top (3) Person.Address.City, Sales.SalesOrderHeader.SubTotal
+FROM Person.Address
+JOIN Sales.SalesOrderHeader
+ON Sales.SalesOrderHeader.ShipToAddressID=Address.AddressID
+ORDER BY Sales.SalesOrderHeader.SubTotal DESC;
 
 
 
