@@ -46,6 +46,11 @@ WHERE FactResellerSales.OrderQuantity=1;
 
 
 //8
+select weight,totalproductcost as subtotal from DimProduct join FactResellerSales on DimProduct.ProductKey=FactResellerSales.ProductKey 
+join DimReseller on FactResellerSales.ResellerKey=DimReseller.ResellerKey order by TotalProductCost desc;
+ 
+
+
 SELECT DimReseller.ResellerName, DimProduct.Weight, FactResellerSales.SalesAmount
 FROM DimProduct,DimReseller
 JOIN FactResellerSales
@@ -53,7 +58,6 @@ ON DimReseller.ResellerKey = FactResellerSales.ResellerKey
 ORDER BY FactResellerSales.OrderQuantity DESC;
 
 //9
-
 SELECT DimCustomer.FirstName, DimReseller.AddressLine1, DimReseller.AddressLine2 as Shippingaddress
 FROM DimCustomer
 JOIN DimGeography
