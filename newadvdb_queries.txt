@@ -1,0 +1,223 @@
+//queries
+//1
+SELECT Name, EmailAddress, FirstName 
+FROM Sales.Store 
+JOIN Sales.Customer 
+ON Sales.Store.BusinessEntityID=Sales.Customer.StoreID 
+
+JOIN Person.Person 
+ON Sales.Customer.PersonID=Person.Person.BusinessEntityID
+
+JOIN Person.EmailAddress 
+ON Person.BusinessEntityID=EmailAddress.BusinessEntityID 
+
+WHERE NAME='Bike World';
+
+
+SELECT FirstName, EmailPromotion, BusinessEntityID
+FROM Person.Person
+WHERE BusinessEntityID= 
+(SELECT BusinessEntityID 
+FROM Sales.Store
+WHERE Name='Bike World');
+//2
+SELECT Name, City 
+FROM Sales.Store 
+JOIN Sales.Customer 
+ON Sales.Customer.CustomerID=Sales.Store.BusinessEntityID 
+JOIN Person.BusinessEntity 
+ON Person.BusinessEntity.BusinessEntityID=Sales.Store.BusinessEntityID 
+
+JOIN Person.BusinessEntityAddress 
+ON Person.BusinessEntityAddress.BusinessEntityID=Person.BusinessEntity.BusinessEntityID 
+JOIN 
+Person.Address on Person.BusinessEntityAddress.AddressID=person.Address.AddressID 
+WHERE City='Dallas';
+
+//3
+SELECT COUNT(*)
+  FROM [AdventureWorks2017].[Purchasing].[PurchaseOrderHeader]
+  Where SubTotal>1000
+//4
+
+/****** Script for SelectTopNRows command from SSMS  ******/
+SELECT Name, SUM(SubTotal+TaxAmt+Freight)
+  FROM [AdventureWorks2017].[Sales].[Store]
+  JOIN [AdventureWorks2017].[Sales].[SalesOrderHeader]
+  ON Store.SalesPersonID=SalesOrderHeader.SalesPersonID
+  WHERE SalesOrderHeader.TotalDue>10000
+  GROUP BY Name;
+
+
+SELECT Name
+  FROM [AdventureWorks2017].[Sales].[Store]
+  INNER JOIN [AdventureWorks2017].[Sales].[SalesOrderHeader]
+  ON Store.SalesPersonID=SalesOrderHeader.SalesPersonID
+  WHERE SalesOrderHeader.TotalDue>10000;
+
+//5
+SELECT SUM(sales.SalesOrderDetail.OrderQty) As Total
+
+FROM sales.SalesOrderDetail
+JOIN production.Product
+
+ON SalesOrderDetail.ProductID = Product.ProductID
+JOIN sales.SalesOrderHeader
+
+ON SalesOrderDetail.SalesOrderID = SalesOrderHeader.SalesOrderID
+
+JOIN sales.Customer ON SalesOrderHeader.CustomerID = Customer.CustomerID
+
+JOIN sales.store on sales.Customer.StoreID=sales.store.BusinessEntityID
+WHERE Product.Name = 'Racing Socks, L'
+
+AND store.Name = 'Riding Cycles';
+//6
+SELECT SalesOrderID, UnitPrice, OrderQty
+  FROM [AdventureWorks2017].[Sales].[SalesOrderDetail]
+  WHERE OrderQty=1;
+//7
+select distinct(Production.ProductModel.name),sales.store.name from production.ProductModel join 
+Production.Product on Production.ProductModel.ProductModelID=Production.Product.ProductModelID 
+JOIN
+sales.SalesOrderDetail
+    ON SalesOrderDetail.ProductID = Product.ProductID
+  JOIN
+    sales.SalesOrderHeader
+    ON SalesOrderDetail.SalesOrderID = SalesOrderHeader.SalesOrderID
+  JOIN
+    sales.Customer
+    ON SalesOrderHeader.CustomerID = Customer.CustomerID
+	join
+	sales.store on sales.Customer.StoreID=sales.store.BusinessEntityID
+WHERE
+  ProductModel.Name = 'Racing Socks';
+
+//8
+select ProductDescription.Description from Production.Product 
+inner join Production.ProductModel on Product.ProductModelID = ProductModel.ProductModelID 
+inner join Production.ProductModelProductDescriptionCulture 
+on ProductModelProductDescriptionCulture.ProductModelID = ProductModel.ProductModelID 
+inner join Production.ProductDescription 
+on ProductDescription.ProductDescriptionID = ProductModelProductDescriptionCulture.ProductDescriptionID 
+inner join production.Culture 
+on ProductModelProductDescriptionCulture.CultureID = Culture.CultureID
+where Culture.CultureID = 'fr' and Product.ProductID = 736;
+
+
+//9
+SELECT Store.Name, SalesOrderHeader.SubTotal, SalesOrderHeader.SalesOrderID
+  FROM [AdventureWorks2017].[Sales].[SalesOrderHeader],[AdventureWorks2017].[Sales].[Store]
+   ORDER BY SalesOrderHeader.SubTotal DESC;
+ 
+SELECT Store.Name, SalesOrderHeader.SalesOrderNumber      
+  FROM [AdventureWorks2017].[Sales].[Store]
+  INNER JOIN [AdventureWorks2017].[Sales].[SalesOrderHeader]
+  ON Store.SalesPersonID=SalesOrderHeader.SalesPersonID
+  ORDER BY SalesOrderID DESC;
+//10
+select SUM(sales.SalesOrderDetail.OrderQty)
+
+from production.ProductSubcategory
+join Production.Product 
+on Product.ProductSubcategoryID=ProductSubcategory.ProductSubcategoryID
+
+join sales.SalesOrderDetail 
+on  Product.ProductID = SalesOrderDetail.ProductID
+join sales.SalesOrderHeader 
+on SalesOrderDetail.SalesOrderID = SalesOrderHeader.SalesorderID
+
+join person.Address 
+on SalesOrderHeader.ShipToAddressID =person.Address.AddressID
+
+where Address.City = 'London' 
+and 
+ProductsubCategory.Name = 'Cranksets';
+
+
+//12
+SELECT SubTotal, SubTotal*(SalesOrderDetail.OrderQty) as SubtOq , (SalesOrderDetail.OrderQty)+(SalesOrderDetail.UnitPrice) as sumolp
+  FROM [AdventureWorks2017].[Sales].[SalesOrderHeader],[AdventureWorks2017].[Sales].[SalesOrderDetail] ;
+
+
+//13
+/****** Script for SelectTopNRows command from SSMS 
+SELECT TOP (1000) [SalesOrderID]
+      ,[RevisionNumber]
+      ,[OrderDate]
+      ,[DueDate]
+      ,[ShipDate]
+      ,[Status]
+      ,[OnlineOrderFlag]
+      ,[SalesOrderNumber]
+      ,[PurchaseOrderNumber]
+      ,[AccountNumber]
+      ,[CustomerID]
+      ,[SalesPersonID]
+      ,[TerritoryID]
+      ,[BillToAddressID]
+      ,[ShipToAddressID]
+      ,[ShipMethodID]
+      ,[CreditCardID]
+      ,[CreditCardApprovalCode]
+      ,[CurrencyRateID]
+      ,[SubTotal]
+      ,[TaxAmt]
+      ,[Freight]
+      ,[TotalDue]
+      ,[Comment]
+      ,[rowguid]
+      ,[ModifiedDate]
+  FROM [AdventureWorks2017].[Sales].[SalesOrderHeader]  ******/
+  SELECT COUNT(DISTINCT SubTotal)
+  FROM [AdventureWorks2017].[Sales].[SalesOrderHeader]
+  WHERE SubTotal BETWEEN 0 AND 99;
+  SELECT COUNT(DISTINCT SubTotal)
+  FROM [AdventureWorks2017].[Sales].[SalesOrderHeader]
+  WHERE SubTotal BETWEEN 100 AND 999;
+  SELECT COUNT(DISTINCT SubTotal)
+  FROM [AdventureWorks2017].[Sales].[SalesOrderHeader]
+  WHERE SubTotal BETWEEN 1000 AND 10000;
+   SELECT COUNT(DISTINCT SubTotal)
+  FROM [AdventureWorks2017].[Sales].[SalesOrderHeader]
+  WHERE SubTotal>10000;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//rough--ref. 
+SELECT Name
+FROM Sales.Store
+WHERE rowguid= 
+(SELECT *
+FROM Person.Address
+WHERE City='Dallas');
+
+SELECT orders.order_id, suppliers.name   
+FROM suppliers  
+INNER JOIN orders  
+ON suppliers.supplier_id = orders.supplier_id  
+ORDER BY order_id; 
+//
+ $result = mysql_query("SELECT * FROM `table1` 
+                        INNER JOIN `table2` 
+                        INNER JOIN table3 
+                        ON table1.primaryKey=table2.table1Id=table3.table1Id");
+//
+/****** Script for SelectTopNRows command from SSMS  ******/
+
+
+ (SELECT ProductModelID
+  FROM [AdventureWorks2017].[Production].[ProductModel]
+  WHERE NAME='Racing Socks');
+//
