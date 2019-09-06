@@ -43,7 +43,9 @@ FROM FactResellerSales
 WHERE FactResellerSales.OrderQuantity=1;
 
 //7 product description for culture 'fr' for product with ProductID 736.
-
+SELECT [FrenchDescription]
+  FROM [AdventureWorksDW2017].[dbo].[DimProduct]
+  WHERE ProductKey=736;
 
 //8
 select weight,totalproductcost as subtotal from DimProduct join FactResellerSales on DimProduct.ProductKey=FactResellerSales.ProductKey 
@@ -89,3 +91,16 @@ FROM DimReseller
 JOIN DimGeography
 ON DimGeography.GeographyKey=DimReseller.GeographyKey
 ORDER BY DimReseller.OrderFrequency DESC;
+//fr 
+SELECT [FrenchDescription]
+  FROM [AdventureWorksDW2017].[dbo].[DimProduct]
+  WHERE ProductKey=736;
+//13
+select count(*) from DimProductSubcategory join DimProduct on DimProductSubcategory.ProductSubcategoryKey=DimProduct.ProductSubcategoryKey join factresellersales on dimproduct.productkey=FactResellerSales.ProductKey
+join DimReseller on dimreseller.resellerkey=FactResellerSales.resellerkey 
+join DimGeography on dimreseller.GeographyKey=DimGeography.GeographyKey where city ='London' and EnglishProductSubcategoryName='cranksets';
+
+//racing socks
+select count(*) from DimProduct join FactResellerSales on DimProduct.ProductKey=FactResellerSales.ProductKey
+join DimReseller on FactResellerSales.ResellerKey=DimReseller.Resellerkey where EnglishProductName='Racing Socks, L' and ResellerName='Riding Cycles';
+
